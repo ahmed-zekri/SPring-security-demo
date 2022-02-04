@@ -1,9 +1,7 @@
 package com.spring.security.demo.payload;
 
-import com.spring.security.demo.models.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
