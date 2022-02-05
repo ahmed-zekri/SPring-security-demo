@@ -9,5 +9,8 @@ public enum ERole {
     ROLE_BA,
     ROLE_DEVOPS,
     ROLE_MODERATOR,
+    ROLE_USER_MANAGER,
+    ROLE_ANONYMOUS
+
 
 }

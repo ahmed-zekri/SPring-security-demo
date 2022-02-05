@@ -1,22 +1,30 @@
-package com.spring.security.demo.controllers;
+package com.spring.security.demo.controllers.authController;
 
 import com.spring.security.demo.models.ERole;
 import com.spring.security.demo.models.Role;
 import com.spring.security.demo.models.User;
+import com.spring.security.demo.payload.JwtResponse;
+import com.spring.security.demo.payload.LoginRequest;
 import com.spring.security.demo.payload.MessageResponse;
 import com.spring.security.demo.payload.SignUpRequest;
 import com.spring.security.demo.repositories.RoleRepository;
 import com.spring.security.demo.repositories.UserRepository;
+import com.spring.security.demo.security.services.UserDetailsImpl;
 import com.spring.security.demo.security.services.jwt.JwtUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -32,7 +40,7 @@ public class AuthController {
 
     final JwtUtils jwtUtils;
 
-    @Autowired
+
     public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
@@ -42,12 +50,22 @@ public class AuthController {
     }
 
 
-//    @PostMapping("/signin")
-//    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//    }
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        JwtResponse jwtResponse = new JwtResponse(jwt);
+        jwtResponse.setRoles(roles);
+        return ResponseEntity.ok(jwtResponse);
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
@@ -84,6 +102,12 @@ public class AuthController {
                         Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
+
+                        break;
+                    case "devops":
+                        Role devRole = roleRepository.findByName(ERole.ROLE_DEVOPS)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(devRole);
 
                         break;
                     default:
