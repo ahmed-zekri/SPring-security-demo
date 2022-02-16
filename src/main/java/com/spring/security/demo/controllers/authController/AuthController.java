@@ -5,7 +5,6 @@ import com.spring.security.demo.models.Role;
 import com.spring.security.demo.models.User;
 import com.spring.security.demo.payload.JwtResponse;
 import com.spring.security.demo.payload.LoginRequest;
-import com.spring.security.demo.payload.MessageResponse;
 import com.spring.security.demo.payload.SignUpRequest;
 import com.spring.security.demo.repositories.RoleRepository;
 import com.spring.security.demo.repositories.UserRepository;
@@ -68,7 +67,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public Object registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity.badRequest().body("Username is already taken!");
         }
@@ -121,7 +120,7 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return user;
 
     }
 }

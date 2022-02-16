@@ -1,18 +1,31 @@
 package com.spring.security.demo.controllers.testController;
 
+import com.spring.security.demo.models.Movie;
+import com.spring.security.demo.repositories.MovieRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/test")
+@AllArgsConstructor
 public class TestController {
+    MovieRepository movieRepository;
+
     @GetMapping("/all")
     public String allAccess() {
         return "Public Content.";
+    }
+
+    @GetMapping("/movies")
+    public List<Movie> getMovies() {
+        return movieRepository.findAll();
     }
 
     @GetMapping("/user")
