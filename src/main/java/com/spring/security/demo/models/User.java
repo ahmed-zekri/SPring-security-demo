@@ -1,5 +1,6 @@
 package com.spring.security.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ public class User {
     @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PUBLIC)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     @Id
     private long id;
 
@@ -40,6 +42,7 @@ public class User {
     @Size(max = 120)
     @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PUBLIC)
+    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)

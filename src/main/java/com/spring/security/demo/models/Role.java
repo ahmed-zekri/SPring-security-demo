@@ -1,5 +1,6 @@
 package com.spring.security.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ public class Role {
     @Setter(AccessLevel.PUBLIC)
     @Id
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+    @JsonIgnore
     private long id;
 
     @Getter(AccessLevel.PUBLIC)

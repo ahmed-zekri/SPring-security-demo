@@ -1,5 +1,6 @@
 package com.spring.security.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 public class Movie {
     @Id
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @Getter
