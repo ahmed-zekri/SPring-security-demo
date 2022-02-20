@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
+
 @AllArgsConstructor
 public class SignUpRequest {
 
@@ -26,5 +27,5 @@ public class SignUpRequest {
 
     @Getter
     @Setter
-    private Set<Integer> roles;
+    private Set<String> roles;
 }

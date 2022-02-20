@@ -81,7 +81,7 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        Set<Integer> rolesValue = signUpRequest.getRoles();
+        Set<String> rolesValue = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
 
         if (rolesValue == null) {
@@ -91,19 +91,19 @@ public class AuthController {
         } else {
             rolesValue.forEach(role -> {
                 switch (role) {
-                    case 1:
+                    case "Admin":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
-                    case 2:
+                    case "Moderator":
                         Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
 
                         break;
-                    case 3:
+                    case "Devops":
                         Role devRole = roleRepository.findByName(ERole.ROLE_DEVOPS)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(devRole);
