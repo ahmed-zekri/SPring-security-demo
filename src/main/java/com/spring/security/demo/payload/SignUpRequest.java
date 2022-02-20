@@ -26,5 +26,5 @@ public class SignUpRequest {
 
     @Getter
     @Setter
-    private Set<String> roles;
+    private Set<Integer> roles;
 }
