@@ -24,6 +24,7 @@ public class TestController {
     }
 
     @GetMapping("/movies")
+    @PreAuthorize("hasRole('USER')")
     public List<Movie> getMovies() {
         return movieRepository.findAll();
     }
