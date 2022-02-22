@@ -33,6 +33,16 @@ public class Movie {
     private LocalDate releaseDate;
 
 
+    @Getter
+    @Setter
+    private boolean isFavourite;
+
+
+    @Getter
+    @Setter
+    private float rating;
+
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "movies_charactes", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "character_id"))
     @Getter
