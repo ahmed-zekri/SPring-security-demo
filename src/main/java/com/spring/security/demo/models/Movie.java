@@ -35,12 +35,12 @@ public class Movie {
 
     @Getter
     @Setter
-    private boolean isFavourite;
+    private Boolean isFavourite;
 
 
     @Getter
     @Setter
-    private float rating;
+    private Float rating;
 
 
     @ManyToMany(fetch = FetchType.LAZY)

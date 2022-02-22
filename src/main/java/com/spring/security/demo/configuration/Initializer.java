@@ -62,7 +62,7 @@ public class Initializer implements CommandLineRunner {
 
         Movie movie = new Movie();
         movie.setTitle("The Avengers");
-        movie.setFavourite(true);
+        movie.setIsFavourite(true);
         movie.setCharacters(characters);
         movie.setRating(5.8f);
 
@@ -72,7 +72,7 @@ public class Initializer implements CommandLineRunner {
 
         Movie movie2 = new Movie();
         movie2.setTitle("The Avengers2");
-        movie.setFavourite(true);
+        movie.setIsFavourite(true);
         movie.setCharacters(characters);
         movie.setRating(5.9f);
 
