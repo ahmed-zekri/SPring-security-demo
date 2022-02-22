@@ -64,7 +64,7 @@ public class Initializer implements CommandLineRunner {
         movie.setTitle("The Avengers");
         movie.setIsFavourite(true);
         movie.setCharacters(characters);
-        movie.setRating(5.8f);
+        movie.setRating(5);
 
         movie.setReleaseDate(LocalDate.of(2012, 1, 1));
         movie.setEpisodes(55);
@@ -74,7 +74,7 @@ public class Initializer implements CommandLineRunner {
         movie2.setTitle("The Avengers2");
         movie.setIsFavourite(true);
         movie.setCharacters(characters);
-        movie.setRating(5.9f);
+        movie.setRating(6);
 
         movie.setReleaseDate(LocalDate.of(2013, 1, 1));
         movie.setEpisodes(25);

@@ -40,7 +40,7 @@ public class Movie {
 
     @Getter
     @Setter
-    private Float rating;
+    private Integer rating;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
