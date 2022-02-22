@@ -62,10 +62,24 @@ public class Initializer implements CommandLineRunner {
 
         Movie movie = new Movie();
         movie.setTitle("The Avengers");
+        movie.setFavourite(true);
         movie.setCharacters(characters);
+        movie.setRating(5.8f);
 
         movie.setReleaseDate(LocalDate.of(2012, 1, 1));
         movie.setEpisodes(55);
+
+
+        Movie movie2 = new Movie();
+        movie2.setTitle("The Avengers2");
+        movie.setFavourite(true);
+        movie.setCharacters(characters);
+        movie.setRating(5.9f);
+
+        movie.setReleaseDate(LocalDate.of(2013, 1, 1));
+        movie.setEpisodes(25);
+
+
         if (movieRepository.findFirstByTitle(movie.getTitle()).isEmpty())
             movieRepository.save(movie);
 
