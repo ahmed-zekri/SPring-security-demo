@@ -1,9 +1,11 @@
 package com.spring.security.demo.security;
 
+import com.spring.security.demo.configuration.ErrorHandling;
 import com.spring.security.demo.security.services.UserDetailsServiceImpl;
 import com.spring.security.demo.security.services.jwt.AuthEntryPointJwt;
 import com.spring.security.demo.security.services.jwt.AuthTokenFilter;
 import com.spring.security.demo.security.services.jwt.JwtUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 @EnableWebSecurity
+@AllArgsConstructor
 @EnableGlobalMethodSecurity(
         prePostEnabled = true
 )
@@ -25,12 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthEntryPointJwt unauthorizedHandler;
     private final JwtUtils jwtUtils;
-
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, AuthEntryPointJwt unauthorizedHandler, JwtUtils jwtUtils) {
-        this.userDetailsService = userDetailsService;
-        this.unauthorizedHandler = unauthorizedHandler;
-        this.jwtUtils = jwtUtils;
-    }
+    private final ErrorHandling errorHandling;
 
 
     public AuthTokenFilter authTokenFilter() {
@@ -55,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling().accessDeniedHandler(errorHandling).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .anyRequest().authenticated();
