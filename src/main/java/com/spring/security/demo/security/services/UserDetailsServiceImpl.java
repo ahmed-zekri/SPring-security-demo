@@ -2,6 +2,7 @@ package com.spring.security.demo.security.services;
 
 import com.spring.security.demo.models.User;
 import com.spring.security.demo.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,13 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    final UserRepository userRepository;
+    private UserRepository userRepository;
 
-
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     @Transactional
